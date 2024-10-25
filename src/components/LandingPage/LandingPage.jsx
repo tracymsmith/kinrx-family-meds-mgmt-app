@@ -6,7 +6,7 @@ import './LandingPage.css';
 import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome');
+  const [heading, setHeading] = useState('KinRx');
   const history = useHistory();
 
   const onLogin = (event) => {
@@ -67,3 +67,4 @@ function LandingPage() {
 }
 
 export default LandingPage;
+

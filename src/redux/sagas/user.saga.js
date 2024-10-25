@@ -1,31 +1,29 @@
-import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
+import axios from 'axios';
 
-// worker Saga: will be fired on "FETCH_USER" actions
-function* fetchUser() {
+// worker Saga: will be fired on "REGISTER" actions
+function* registerUser(action) {
   try {
-    const config = {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    };
+    // clear any existing error on the registration page
+    yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
 
-    // the config includes credentials which
-    // allow the server session to recognize the user
-    // If a user is logged in, this will return their information
-    // from the server session (req.user)
-    const response = yield axios.get('/api/user', config);
+    // passes the username and password from the payload to the server
+    yield axios.post('/api/user/register', action.payload);
 
-    // now that the session has given us a user object
-    // with an id and username set the client-side user object to let
-    // the client-side code know the user is logged in
-    yield put({ type: 'SET_USER', payload: response.data });
+    // automatically log a user in after registration
+    yield put({ type: 'LOGIN', payload: action.payload });
+
+    // set to 'login' mode so they see the login screen
+    // after registration or after they log out
+    yield put({ type: 'SET_TO_LOGIN_MODE' });
   } catch (error) {
-    console.log('User get request failed', error);
+    console.log('Error with user registration:', error);
+    yield put({ type: 'REGISTRATION_FAILED' });
   }
 }
 
-function* userSaga() {
-  yield takeLatest('FETCH_USER', fetchUser);
+function* registrationSaga() {
+  yield takeLatest('REGISTER', registerUser);
 }
 
-export default userSaga;
+export default registrationSaga;
