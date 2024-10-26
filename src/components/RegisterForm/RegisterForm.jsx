@@ -9,7 +9,7 @@ function RegisterForm() {
 
   const registerUser = (event) => {
     event.preventDefault();
-
+    console.log('tracysmith')
     dispatch({
       type: 'REGISTER',
       payload: {
