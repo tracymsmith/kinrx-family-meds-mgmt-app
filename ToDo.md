@@ -1,5 +1,5 @@
 - [x] Use template for repo (don't clone).
-- [ ] Make template public in GitHub.
+- [x] Make template public in GitHub.
 - [x] Confirm React, Redux, Express, Passport, and PostgreSQL in package.json file
 - [x] Confirm node.js, nodemon & postgreSQL and above installed and list versions:
     - express@4.21.1
@@ -24,4 +24,4 @@
 - [x] Create .env file at project root & paste SERVER_SESSION_SECRET=superDuperSecret into file 
 - [x] Replace superDuperSecret with random string from password generator.
 - [x] Confirm .env file is included in .gitignore for security reasons.
-- [x] Start postgres; run 'npm run server' to start server; run 'npm run client' to start client; navigate/confirm localhost:5173 on DOM.
+- [x] Start postgres; run 'npm run server' to start server; run 'npm run client' to start client; navigate/confirm localhost:5173 on DOM.s
