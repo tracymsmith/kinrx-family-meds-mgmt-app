@@ -1,0 +1,27 @@
+- [x] Use template for repo (don't clone).
+- [ ] Make template public in GitHub.
+- [x] Confirm React, Redux, Express, Passport, and PostgreSQL in package.json file
+- [x] Confirm node.js, nodemon & postgreSQL and above installed and list versions:
+    - express@4.21.1
+    - nodemon@3.1.7
+    - passport-local@1.0.0
+    -  passport@0.7.0
+    - pg@8.13.0
+    - react-dom@18.3.1
+    - react-redux@7.2.9
+    -  react-router-dom@5.3.4
+    - react@18.3.1
+    - redux-logger@3.0.6
+    - redux-saga@1.3.0
+    - redux@4.2.1
+    - vite@5.4.9
+    - vitest@1.6.0
+- [x] Create new database called prime_app and create user table.
+- [x] Rename database app to kin_rx.
+- [x] Create medicines and patient tables and copy/backup in database.sql file.
+- [ ] Create joint patients/meds table and copy/backup in database.sql file.
+- [x] Run npm install and confirm package.json dependencies.
+- [x] Create .env file at project root & paste SERVER_SESSION_SECRET=superDuperSecret into file 
+- [x] Replace superDuperSecret with random string from password generator.
+- [x] Confirm .env file is included in .gitignore for security reasons.
+- [x] Start postgres; run 'npm run server' to start server; run 'npm run client' to start client; navigate/confirm localhost:5173 on DOM.
