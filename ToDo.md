@@ -19,7 +19,7 @@
 - [x] Create new database called prime_app and create user table.
 - [x] Rename database app to kin_rx.
 - [x] Create medicines and patient tables and copy/backup in database.sql file.
-- [ ] Create joint patients/meds table and copy/backup in database.sql file.
+- [x] Create joint patients/meds table and copy/backup in database.sql file.
 - [x] Run npm install and confirm package.json dependencies.
 - [x] Create .env file at project root & paste SERVER_SESSION_SECRET=superDuperSecret into file 
 - [x] Replace superDuperSecret with random string from password generator.
