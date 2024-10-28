@@ -27,4 +27,6 @@ CREATE TABLE "patients_medicines" (
     "amount" VARCHAR(1000) NOT NULL,
     "frequency" VARCHAR(1000) NOT NULL
 );
+INSERT INTO "patients_medicines" (patient_id, medicine_id, dose, amount, frequency)
+VALUES (1, 2, '500 mg', '1 tablet', 'Twice daily');
 
