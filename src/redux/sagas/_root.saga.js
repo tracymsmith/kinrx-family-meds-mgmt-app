@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 import loginSaga from './login.saga';
 import medicineSaga from './medicine.saga';
+import patientSaga from './patient.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 
@@ -15,6 +16,7 @@ export default function* rootSaga() {
   yield all([
     loginSaga(), // login saga is now registered
     medicineSaga(),
+    patientSaga(),
     registrationSaga(),
     userSaga(),
   ]);
