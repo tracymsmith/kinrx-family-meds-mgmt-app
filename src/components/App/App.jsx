@@ -20,7 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import HomePage from '../HomePage/HomePage';
-// import PatientPage from '../PatientPage/PatientPage';
+import PatientPage from '../PatientPage/PatientPage';
 
 
 
@@ -111,6 +111,20 @@ function App() {
               :
               // Otherwise, show the Landing page
               <LandingPage />
+            }
+          </Route>
+
+          <Route
+            exact
+            path="/patient"
+          >
+            {user.id ?
+              // If the user is already logged in, 
+              // redirect them to the /user page
+            <PatientPage />
+              :
+              // Otherwise, show the Landing page
+              <PatientPage />
             }
           </Route>
 
