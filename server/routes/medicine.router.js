@@ -18,15 +18,13 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const { medicine, dosage } = req.body;
   const queryText = `
-    INSERT INTO "medicines" (medicine, dosage, user_id)
-    VALUES ($1, $2, $3) RETURNING *;
+    INSERT INTO "medicines" (medicine, dosage)
+    VALUES ($1, $2) RETURNING *;
   `;
 
-  // Replace user_id with actual user logic as needed
-  const userId = 1; // Temporary placeholder for user_id
 
   pool
-    .query(queryText, [medicine, dosage, userId])
+    .query(queryText, [medicine, dosage])
     .then((result) => res.status(201).json(result.rows[0]))
     .catch((error) => {
       console.error('Error adding new medicine:', error);
