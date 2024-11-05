@@ -15,6 +15,12 @@ function HomePage() {
   const [medicineName, setMedicineName] = useState('');
   const [medicineDosage, setMedicineDosage] = useState('');
   
+  // Local state for selecting patient, medicine, amount, and frequency
+  const [selectedPatient, setSelectedPatient] = useState('');
+  const [selectedMedicine, setSelectedMedicine] = useState('');
+  const [medicineAmount, setMedicineAmount] = useState('');
+  const [medicineFrequency, setMedicineFrequency] = useState('');
+  
  
   // Dispatch fetch actions when the component mounts
   useEffect(() => {
@@ -64,6 +70,28 @@ function HomePage() {
       dispatch({type: 'FETCH_MEDICINES'});
     } catch (error) {
       console.error('Error adding new medicine:', error);
+    }
+  };
+
+  // Handle form submission to link meds to patients
+  const handleAddPatientMedicine = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post('/api/patients_medicines', {
+        patient_id: selectedPatient,
+        medicine_id: selectedMedicine,
+        amount: medicineAmount,
+        frequency: medicineFrequency,
+      });
+
+      // Clear input fields
+      setSelectedPatient('');
+      setSelectedMedicine('');
+      setMedicineAmount('');
+      setMedicineFrequency('');
+
+    } catch (error) {
+      console.error('Error adding patient medicine:', error);
     }
   };
 
@@ -120,31 +148,69 @@ function HomePage() {
         <button type="submit">Add New Medicine</button>
       </form>
 
-      <h2>Select Patient</h2>
-      <select>
-        <option value="">--Select Patient--</option>
-        {patients.map((patient) => (
-          <option key={patient.id} value={patient.id}>
-            {patient.patient}
-          </option>
-        ))}
-      </select>
+      {/* NEW: Form to select a patient, medicine, amount, and frequency */}
 
-      <h3>Select Medicine</h3>
-      <select>
-        <option value="">--Select Medicine--</option>
-        {medicines.map((medicine) => (
-          <option key={medicine.id} value={medicine.id}>
-            {medicine.medicine} - {medicine.dosage}
-          </option>
-        ))}
-      </select>
-
-    
+      <h1>Link Med to Patient</h1>
 
 
+      <form onSubmit={handleAddPatientMedicine}>
+        <label>
+          Select Patient:
+          <select
+            value={selectedPatient}
+            onChange={(e) => setSelectedPatient(e.target.value)}
+            required
+          >
+            <option value="">--Select Patient--</option>
+            {patients.map((patient) => (
+              <option key={patient.id} value={patient.id}>
+                {patient.patient}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          Select Medicine:
+          <select
+            value={selectedMedicine}
+            onChange={(e) => setSelectedMedicine(e.target.value)}
+            required
+          >
+            <option value="">--Select Medicine--</option>
+            {medicines.map((medicine) => (
+              <option key={medicine.id} value={medicine.id}>
+                {medicine.medicine} - {medicine.dosage}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          Amount:
+          <input
+            type="text"
+            value={medicineAmount}
+            onChange={(e) => setMedicineAmount(e.target.value)}
+            required
+          />
+        </label>
+
+        <label>
+          Frequency:
+          <input
+            type="text"
+            value={medicineFrequency}
+            onChange={(e) => setMedicineFrequency(e.target.value)}
+            required
+          />
+        </label>
+        
+        <button type="submit">Add Medicine to Patient</button>
+      </form>
     </div>
   );
+
 }
 
 export default HomePage;

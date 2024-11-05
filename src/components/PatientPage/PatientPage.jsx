@@ -8,18 +8,25 @@ function PatientPage() {
   const patients = useSelector((state) => state.patients);
   const medicines = useSelector((state) => state.patientMedicines);
 
-  // Local state to store the selected patient’s ID
   const [selectedPatientId, setSelectedPatientId] = useState(null);
 
-  // Fetch patients when the component mounts
   useEffect(() => {
     dispatch(fetchPatients());
   }, [dispatch]);
 
-  // Handle clicking on a patient button
   const handlePatientClick = (patientId) => {
-    setSelectedPatientId(patientId); // Set the selected patient
-    dispatch(fetchPatientMedicines(patientId)); // Fetch medicines for the selected patient
+    setSelectedPatientId(patientId);
+    dispatch(fetchPatientMedicines(patientId));
+  };
+
+  const handleEditMedicine = (medicineId) => {
+    // Implement edit functionality
+    console.log(`Edit medicine with ID: ${medicineId}`);
+  };
+
+  const handleDeleteMedicine = (medicineId) => {
+    // Implement delete functionality
+    console.log(`Delete medicine with ID: ${medicineId}`);
   };
 
   return (
@@ -37,14 +44,25 @@ function PatientPage() {
         ))}
       </div>
 
-      {/* Display Medicines for the Selected Patient */}
       {selectedPatientId && (
         <div>
           <h2>Medicines for Selected Patient</h2>
-          <ul>
+          <ul style={{ listStyleType: 'none', padding: 0 }}>
             {medicines.map((med) => (
-              <li key={med.id}>
+              <li key={med.id} style={{ marginBottom: '10px' }}>
                 <strong>{med.medicine}</strong> - {med.dosage}, {med.amount}, {med.frequency}
+                <button 
+                  onClick={() => handleEditMedicine(med.id)}
+                  style={{ marginLeft: '10px' }}
+                >
+                  Edit
+                </button>
+                <button 
+                  onClick={() => handleDeleteMedicine(med.id)}
+                  style={{ marginLeft: '5px' }}
+                >
+                  Delete
+                </button>
               </li>
             ))}
           </ul>
@@ -55,5 +73,3 @@ function PatientPage() {
 }
 
 export default PatientPage;
-
-  
