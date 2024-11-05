@@ -22,8 +22,10 @@ CREATE TABLE "patients" (
 CREATE TABLE "patients_medicines" (
     "id" SERIAL PRIMARY KEY,
     "patient_id" INT REFERENCES "patients"(id) ON DELETE CASCADE,
+    "patient" VARCHAR (80) UNIQUE NOT NULL,
     "medicine_id" INT REFERENCES "medicines"(id) ON DELETE CASCADE,
-    "dose" VARCHAR(1000) NOT NULL,
+    "medicine" VARCHAR (80) UNIQUE NOT NULL,
+    "dosage" VARCHAR(1000) NOT NULL,
     "amount" VARCHAR(1000) NOT NULL,
     "frequency" VARCHAR(1000) NOT NULL
 );

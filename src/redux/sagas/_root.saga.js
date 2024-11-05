@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects';
 import loginSaga from './login.saga';
 import medicineSaga from './medicine.saga';
 import patientSaga from './patient.saga';
+import patientMedicinesSaga from './patientMedicines.saga'
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 
@@ -17,6 +18,7 @@ export default function* rootSaga() {
     loginSaga(), // login saga is now registered
     medicineSaga(),
     patientSaga(),
+    patientMedicinesSaga(),
     registrationSaga(),
     userSaga(),
   ]);

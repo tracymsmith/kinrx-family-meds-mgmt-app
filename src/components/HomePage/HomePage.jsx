@@ -15,12 +15,13 @@ function HomePage() {
   const [medicineName, setMedicineName] = useState('');
   const [medicineDosage, setMedicineDosage] = useState('');
   
-
+ 
   // Dispatch fetch actions when the component mounts
   useEffect(() => {
     dispatch({type: 'FETCH_PATIENTS'});
     dispatch({type: 'FETCH_MEDICINES'});
-  }, []);
+  }, []);  
+  
 
   // Handle form submission to add a new patient
   const handlePatientSubmit = async (event) => {
@@ -69,7 +70,7 @@ function HomePage() {
 
   return (
     <div>
-      <h1>Welcome to the KinRx Home Page</h1>
+      <h1>Add New Patients</h1>
 
       {/* Form to add new patient */}
       <form onSubmit={handlePatientSubmit}>
@@ -91,8 +92,10 @@ function HomePage() {
             required
           />
         </label>
-        <button type="submit">Add Patient</button>
+        <button type="submit">Add New Patient</button>
       </form>
+
+      <h1>Add New Medicines</h1>
 
       {/* Form to add new medicine */}
       <form onSubmit={handleMedicineSubmit}>
@@ -114,7 +117,7 @@ function HomePage() {
             required
           />
         </label>
-        <button type="submit">Add Medicine</button>
+        <button type="submit">Add New Medicine</button>
       </form>
 
       <h2>Select Patient</h2>
@@ -127,15 +130,19 @@ function HomePage() {
         ))}
       </select>
 
-      <h2>Select Medicine</h2>
+      <h3>Select Medicine</h3>
       <select>
         <option value="">--Select Medicine--</option>
         {medicines.map((medicine) => (
           <option key={medicine.id} value={medicine.id}>
-            {medicine.medicine} - {medicine.dose}
+            {medicine.medicine} - {medicine.dosage}
           </option>
         ))}
       </select>
+
+    
+
+
     </div>
   );
 }
