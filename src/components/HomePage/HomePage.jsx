@@ -89,10 +89,11 @@ function HomePage() {
       });
 
       // Clear input fields
-      setSelectedPatient('');
-      setSelectedMedicine('');
+      setSelectedPatient({ id: '', patient: '' });
+      setSelectedMedicine({ id: '', medicine: '' });
       setMedicineAmount('');
       setMedicineFrequency('');
+
 
     } catch (error) {
       console.error('Error adding patient medicine:', error);
