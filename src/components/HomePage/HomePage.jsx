@@ -14,7 +14,7 @@ function HomePage() {
   const [patientDOB, setPatientDOB] = useState('');
   const [medicineName, setMedicineName] = useState('');
   const [medicineDosage, setMedicineDosage] = useState('');
-  
+
   // Local state for selecting patient, medicine, amount, and frequency
   const [selectedPatient, setSelectedPatient] = useState('');
   const [selectedMedicine, setSelectedMedicine] = useState('');
@@ -76,10 +76,14 @@ function HomePage() {
   // Handle form submission to link meds to patients
   const handleAddPatientMedicine = async (event) => {
     event.preventDefault();
+    console.log(selectedPatient.data, selectedMedicine.data, medicineAmount, medicineFrequency)
     try {
       await axios.post('/api/patients_medicines', {
-        patient_id: selectedPatient,
-        medicine_id: selectedMedicine,
+        patient_id: selectedPatient.id,
+        patient: selectedPatient.patient,
+        medicine_id: selectedMedicine.id,
+        medicine: selectedMedicine.medicine,
+        dosage: selectedMedicine.dosage,
         amount: medicineAmount,
         frequency: medicineFrequency,
       });
@@ -99,6 +103,7 @@ function HomePage() {
   return (
     <div>
       <h1>Add New Patients</h1>
+      <p>{JSON.stringify(selectedMedicine.medicine)}</p>
 
       {/* Form to add new patient */}
       <form onSubmit={handlePatientSubmit}>
@@ -163,7 +168,7 @@ function HomePage() {
           >
             <option value="">--Select Patient--</option>
             {patients.map((patient) => (
-              <option key={patient.id} value={patient.id}>
+              <option key={patient.id} value={patient}>
                 {patient.patient}
               </option>
             ))}
@@ -179,7 +184,7 @@ function HomePage() {
           >
             <option value="">--Select Medicine--</option>
             {medicines.map((medicine) => (
-              <option key={medicine.id} value={medicine.id}>
+              <option key={medicine.id} value={medicine}>
                 {medicine.medicine} - {medicine.dosage}
               </option>
             ))}

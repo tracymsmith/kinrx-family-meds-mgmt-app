@@ -1,16 +1,15 @@
 import React from 'react';
 
-// This is one of our simplest components
-// It doesn't have local state,
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is'
-
 function AboutPage() {
   return (
     <div className="container">
-      <div>
-        <p>This about page is for anyone to read!</p>
-      </div>
+      <h2>About KinRx</h2>
+      <ul>
+        <li><strong>Personalized medicine organizer</strong> for your family – track prescriptions, doses and timing with ease.</li>
+        <li>Say goodbye to the med management juggling act – KinRx makes it simple and stress-free.</li>
+        <li>Perfect for everyone from <strong>grandma to teens</strong>, ensuring all medications are on schedule.</li>
+        <li>Focus on what really matters: <strong>providing care</strong> – we’ll handle the rest!</li>
+      </ul>
     </div>
   );
 }

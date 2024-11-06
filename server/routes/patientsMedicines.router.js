@@ -22,14 +22,15 @@ router.get('/:patient_id', (req, res) => {
 
 // POST route to add a medicine to a patient
 router.post('/', (req, res) => {
-  const { patient_id, medicine_id, amount, frequency } = req.body;
+  console.log('req.body is', req.body)
+  const { patient_id, patient, medicine_id, medicine, dosage, amount, frequency } = req.body;
   const queryText = `
-    INSERT INTO "patients_medicines" (patient_id, medicine_id, amount, frequency)
-    VALUES ($1, $2, $3, $4) RETURNING *;
+    INSERT INTO "patients_medicines" (patient_id, patient, medicine_id, medicine, dosage, amount, frequency)
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
   `;
 
   pool
-    .query(queryText, [patient_id, medicine_id, amount, frequency])
+    .query(queryText, [patient_id, patient, medicine_id, medicine, dosage, amount, frequency])
     .then((result) => res.status(201).json(result.rows[0]))
     .catch((error) => {
       console.error('Error adding patient medicine:', error);
