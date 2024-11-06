@@ -6,9 +6,8 @@ import { fetchPatientMedicines } from '../../redux/actions/patientMedicines.acti
 function PatientPage() {
   const dispatch = useDispatch();
   const patients = useSelector((state) => state.patients);
-  const medicines = useSelector((state) => state.patientMedicines);
-
   const [selectedPatientId, setSelectedPatientId] = useState(null);
+  const medicines = useSelector((state) => state.patientMedicines);
 
   useEffect(() => {
     dispatch(fetchPatients());
@@ -17,16 +16,6 @@ function PatientPage() {
   const handlePatientClick = (patientId) => {
     setSelectedPatientId(patientId);
     dispatch(fetchPatientMedicines(patientId));
-  };
-
-  const handleEditMedicine = (medicineId) => {
-    // Implement edit functionality
-    console.log(`Edit medicine with ID: ${medicineId}`);
-  };
-
-  const handleDeleteMedicine = (medicineId) => {
-    // Implement delete functionality
-    console.log(`Delete medicine with ID: ${medicineId}`);
   };
 
   return (
@@ -51,18 +40,6 @@ function PatientPage() {
             {medicines.map((med) => (
               <li key={med.id} style={{ marginBottom: '10px' }}>
                 <strong>{med.medicine}</strong> - {med.dosage}, {med.amount}, {med.frequency}
-                <button 
-                  onClick={() => handleEditMedicine(med.id)}
-                  style={{ marginLeft: '10px' }}
-                >
-                  Edit
-                </button>
-                <button 
-                  onClick={() => handleDeleteMedicine(med.id)}
-                  style={{ marginLeft: '5px' }}
-                >
-                  Delete
-                </button>
               </li>
             ))}
           </ul>

@@ -8,4 +8,14 @@ export const fetchPatients = () => ({
     type: 'SET_PATIENTS',
     payload: patients,
   });
+
+  export const editPatient = (patientId, updatedPatientData) => ({
+    type: 'EDIT_PATIENT',
+    payload: { patientId, updatedPatientData }
+  });
+  
+  export const deletePatient = (patientId) => ({
+    type: 'DELETE_PATIENT',
+    payload: patientId
+  });
                  

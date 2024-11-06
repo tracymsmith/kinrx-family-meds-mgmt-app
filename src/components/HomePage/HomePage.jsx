@@ -20,7 +20,10 @@ function HomePage() {
   const [selectedMedicine, setSelectedMedicine] = useState('');
   const [medicineAmount, setMedicineAmount] = useState('');
   const [medicineFrequency, setMedicineFrequency] = useState('');
-  
+
+  // New state for editing patient
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingPatient, setEditingPatient] = useState(null);  
  
   // Dispatch fetch actions when the component mounts
   useEffect(() => {
@@ -32,22 +35,25 @@ function HomePage() {
   // Handle form submission to add a new patient
   const handlePatientSubmit = async (event) => {
     event.preventDefault();
-
     try {
-      // Send a POST request to add the new patient
-      await axios.post('/api/patients', {
-        patient: patientName,
-        date_of_birth: patientDOB,
-      });
-
-      // Clear input fields
+      if (isEditing) {
+        await axios.put(`/api/patients/${editingPatientId}`, {
+          patient: patientName,
+          date_of_birth: patientDOB,
+        });
+        setIsEditing(false);
+        setEditingPatientId(null);
+      } else {
+        await axios.post('/api/patients', {
+          patient: patientName,
+          date_of_birth: patientDOB,
+        });
+      }
       setPatientName('');
       setPatientDOB('');
-
-      // Refresh the list of patients
-      dispatch({type: 'FETCH_PATIENTS'});
+      dispatch({ type: 'FETCH_PATIENTS' });
     } catch (error) {
-      console.error('Error adding new patient:', error);
+      console.error('Error submitting patient:', error);
     }
   };
 
@@ -100,6 +106,33 @@ function HomePage() {
     }
   };
 
+  // New function to handle patient edit
+  const handleEditPatient = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.put(`/api/patients/${editingPatient.id}`, {
+        patient: patientName,
+        date_of_birth: patientDOB,
+      });
+
+      setEditingPatient(null);
+      setPatientName('');
+      setPatientDOB('');
+      dispatch({type: 'FETCH_PATIENTS'});
+    } catch (error) {
+      console.error('Error editing patient:', error);
+    }
+  };
+
+  // New function to handle patient delete
+  const handleDeletePatient = async (patientId) => {
+    try {
+      await axios.delete(`/api/patients/${patientId}`);
+      dispatch({ type: 'FETCH_PATIENTS' });
+    } catch (error) {
+      console.error('Error deleting patient:', error);
+    }
+  };
 
   return (
     <div>
@@ -107,7 +140,7 @@ function HomePage() {
       <p>{JSON.stringify(selectedMedicine.medicine)}</p>
 
       {/* Form to add new patient */}
-      <form onSubmit={handlePatientSubmit}>
+      <form onSubmit={editingPatient ? handleEditPatient : handlePatientSubmit}>
         <label>
           Patient Name:
           <input
@@ -126,8 +159,10 @@ function HomePage() {
             required
           />
         </label>
-        <button type="submit">Add New Patient</button>
-      </form>
+          <button type="submit">
+            {isEditing ? 'Update Patient' : 'Add New Patient'}
+          </button>
+        </form>
 
       <h1>Add New Medicines</h1>
 
@@ -164,14 +199,29 @@ function HomePage() {
           Select Patient:
           <select
             value={selectedPatient.id}
-            onChange={(e) => setSelectedPatient(patients.find(p => p.id === parseInt(e.target.value)))}>
-            required
+            // onChange={(e) => setSelectedPatient(patients.find(p => p.id === parseInt(e.target.value)))}>
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === 'edit') {
+                setIsEditing(true);
+                setEditingPatient(selectedPatient.id);
+                setPatientName(selectedPatient.patient);
+                setPatientDOB(selectedPatient.date_of_birth);
+              } else if (value === 'delete') {
+                handleDeletePatient(selectedPatient.id);
+              } else {
+                setSelectedPatient(patients.find(p => p.id === parseInt(value)));
+              }
+            }}
+          >
             <option value="">--Select Patient--</option>
             {patients.map((patient) => (
               <option key={patient.id} value={patient.id}>
                 {patient.patient}
               </option>
             ))}
+            <option value="edit">Edit Selected Patient</option>
+            <option value="delete">Delete Selected Patient</option>
           </select>
         </label>
 
