@@ -76,7 +76,7 @@ function HomePage() {
   // Handle form submission to link meds to patients
   const handleAddPatientMedicine = async (event) => {
     event.preventDefault();
-    console.log(selectedPatient.data, selectedMedicine.data, medicineAmount, medicineFrequency)
+    console.log(selectedPatient, selectedMedicine, medicineAmount, medicineFrequency)
     try {
       await axios.post('/api/patients_medicines', {
         patient_id: selectedPatient.id,
@@ -162,13 +162,12 @@ function HomePage() {
         <label>
           Select Patient:
           <select
-            value={selectedPatient}
-            onChange={(e) => setSelectedPatient(e.target.value)}
+            value={selectedPatient.id}
+            onChange={(e) => setSelectedPatient(patients.find(p => p.id === parseInt(e.target.value)))}>
             required
-          >
             <option value="">--Select Patient--</option>
             {patients.map((patient) => (
-              <option key={patient.id} value={patient}>
+              <option key={patient.id} value={patient.id}>
                 {patient.patient}
               </option>
             ))}
@@ -178,13 +177,12 @@ function HomePage() {
         <label>
           Select Medicine:
           <select
-            value={selectedMedicine}
-            onChange={(e) => setSelectedMedicine(e.target.value)}
+            value={selectedMedicine.id}
+            onChange={(e) => setSelectedMedicine(medicines.find(m => m.id === parseInt(e.target.value)))}>
             required
-          >
             <option value="">--Select Medicine--</option>
             {medicines.map((medicine) => (
-              <option key={medicine.id} value={medicine}>
+              <option key={medicine.id} value={medicine.id}>
                 {medicine.medicine} - {medicine.dosage}
               </option>
             ))}
