@@ -37,12 +37,12 @@ function HomePage() {
     event.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`/api/patients/${editingPatientId}`, {
+        await axios.put(`/api/patients/${editingPatient}`, {
           patient: patientName,
           date_of_birth: patientDOB,
         });
         setIsEditing(false);
-        setEditingPatientId(null);
+        setEditingPatient(null);
       } else {
         await axios.post('/api/patients', {
           patient: patientName,
@@ -110,11 +110,11 @@ function HomePage() {
   const handleEditPatient = async (event) => {
     event.preventDefault();
     try {
-      await axios.put(`/api/patients/${editingPatient.id}`, {
+      await axios.put(`/api/patients/${editingPatient}`, {
         patient: patientName,
         date_of_birth: patientDOB,
       });
-
+      setIsEditing(false);
       setEditingPatient(null);
       setPatientName('');
       setPatientDOB('');
@@ -209,12 +209,14 @@ function HomePage() {
                 setPatientDOB(selectedPatient.date_of_birth);
               } else if (value === 'delete') {
                 handleDeletePatient(selectedPatient.id);
+              } else if (value === '--Select Patient--') {
+                setSelectedPatient({ id: '', patient: '' });
               } else {
                 setSelectedPatient(patients.find(p => p.id === parseInt(value)));
               }
             }}
           >
-            <option value="">--Select Patient--</option>
+            <option value="--Select Patient--">--Select Patient--</option>
             {patients.map((patient) => (
               <option key={patient.id} value={patient.id}>
                 {patient.patient}
